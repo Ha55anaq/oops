@@ -1,0 +1,146 @@
+package vehicles;
+
+public class Vehicle {
+    private String make;
+    private String model;
+    private int year;
+
+    public Vehicle(String make, String model, int year) {
+        this.setMake(make);
+        this.setModel(model);
+        this.setYear(year);
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+}
+
+
+
+
+
+package vehicles;
+
+public class Owner {
+    private String name;
+    private String address;
+    private Vehicle[] vehicles;
+    private int count;
+
+    public Owner(String name, String address, int maxVehicles) {
+        this.name = name;
+        this.address = address;
+        this.vehicles = new Vehicle[maxVehicles];
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Vehicle[] getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Vehicle[] vehicles) {
+        this.vehicles = vehicles;
+        this.count = vehicles.length;
+    }
+
+    public void car_list(){
+        for (int i = 0; i < count; i++) {
+            System.out.println("Vehicle: " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getYear() + " ");
+        }
+    }
+}
+
+
+
+package vehicles;
+
+import java.util.Scanner;
+
+public class Cars {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String make;
+        String model;
+        int year;
+        String name;
+        String address;
+        int max_vehicles;
+
+        Owner[] own = new Owner[2];
+        for (int a = 0; a < 2; a++) {
+            System.out.print("Enter the Owner name: ");
+            name = sc.nextLine();
+            System.out.print("Enter the Owner address: ");
+            address = sc.nextLine();
+            System.out.print("Enter the Max numbers of Vehicles: ");
+            max_vehicles = sc.nextInt();
+            sc.nextLine();
+
+            Vehicle[] vehicles = new Vehicle[max_vehicles];
+            for (int i = 0; i < max_vehicles; i++) {
+                System.out.print("Enter the Make of vehicle: ");
+                make = sc.nextLine();
+                System.out.print("Enter the Model of vehicle: ");
+                model = sc.nextLine();
+                System.out.print("Enter the Year of vehicle: ");
+                year = sc.nextInt();
+                sc.nextLine();
+
+                vehicles[i] = new Vehicle(make, model, year);
+            }
+            own[a] = new Owner(name, address, max_vehicles);
+            own[a].setVehicles(vehicles);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            System.out.println("Owner name: " + own[i].getName());
+            System.out.println("Owner Address: " + own[i].getAddress());
+            own[i].car_list();
+        }
+    }
+}
+
+
+
+
+
+
+

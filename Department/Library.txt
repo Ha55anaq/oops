@@ -1,0 +1,232 @@
+package Encapsulation;
+
+public class Author {
+    private String name;
+    private String nationality;
+
+    public Author(String name, String nationality) {
+        this.setName(name);
+        this.setNationality(nationality);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name.trim().isEmpty() || name.equals("null")){
+            System.out.println("Name cannot be empty!");
+            System.exit(1);
+        }
+        this.name = name;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        if (name.trim().isEmpty() || name.equals("null")){
+            System.out.println("Name cannot be empty!");
+            System.exit(1);
+        }
+        this.nationality = nationality;
+    }
+
+}
+
+
+
+
+package Encapsulation;
+
+public class Books {
+    private String title;
+    Author author;
+    private int publication_year;
+
+    public Books(String title,Author author, int publication_year) {
+        this.setTitle(title);
+        this.setAuthor(author);
+        this.setPublication_year(publication_year);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        if (title.trim().isEmpty() || title.equals("null")){
+            System.out.println("Name cannot be empty!");
+            System.exit(1);
+        }
+        this.title = title;
+    }
+
+    public int getPublication_year() {
+        return publication_year;
+    }
+
+    public void setPublication_year(int publication_year) {
+        if (publication_year < 1600){
+            System.out.println("Invalid year!");
+            System.exit(1);
+        }
+        this.publication_year = publication_year;
+    }
+
+    public Author getAuthor(){
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public void display(){
+        System.out.println("Title: " + getTitle() + "\nAuthor name: " + getAuthor().getName() + "\nAuthor nationality: " + getAuthor().getNationality() + "\nPublication Year: " + getPublication_year());
+    }
+}
+
+
+
+
+package Encapsulation;
+
+public class Memeber{
+    private String name;
+    private int member_id;
+    private Books []book_borrowed;
+    private int count;
+
+    public Memeber(String name, int member_id) {
+        this.setName(name);
+        this.setMember_id(member_id);
+        this.book_borrowed = new Books[10];
+        this.count = 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(int member_id) {
+        this.member_id = member_id;
+    }
+
+    public void borrowBook(Books book) {
+        if (count < book_borrowed.length) {
+            book_borrowed[count] = book;
+            count++;
+        } else {
+            System.out.println("Cannot borrow more books. Limit reached.");
+        }
+    }
+
+    public void displayBorrowedBooks() {
+        System.out.println("Books borrowed by " + name + ":");
+        for (int i = 0; i < count; i++) {
+            book_borrowed[i].display();
+        }
+    }
+
+    public void display(){
+        System.out.println("Name: " + getName() + "\nId: " + getMember_id());
+    }
+}
+
+
+package Encapsulation;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int number_of_books;
+        System.out.print("Enter number of books: ");
+        number_of_books = sc.nextInt();
+
+        Books[] book = new Books[number_of_books];
+
+        String name1;
+        String nationality1;
+        String title1;
+        int Publication_year1;
+
+        for (int i = 0; i < number_of_books ;i++){
+
+            sc.nextLine();
+            System.out.print("Enter Title of book: ");
+            title1 = sc.nextLine();
+            System.out.print("Enter name of Author of this book: ");
+            name1 = sc.nextLine();
+            System.out.print("Enter nationality of this Author: ");
+            nationality1 = sc.nextLine();
+            System.out.print("Enter Publication year of this Book: ");
+            Publication_year1 = sc.nextInt();
+
+            Author author1 = new Author(name1, nationality1);
+            book[i] = new Books(title1, author1, Publication_year1);
+
+            System.out.println();
+
+        }
+
+        for (int i = 0; i < number_of_books; i++) {
+            Books books = book[i];
+            books.display();
+        }
+
+        int member_id;
+        String member_name;
+        int no_of_members;
+        System.out.print("Enter number of members: ");
+        no_of_members = sc.nextInt();
+        Memeber[] memebers = new Memeber[no_of_members];
+        for (int i = 0; i < no_of_members; i++) {
+            sc.nextLine();
+            System.out.print("Enter Member name: ");
+            member_name = sc.nextLine();
+            System.out.print("Enter Member id: ");
+            member_id = sc.nextInt();
+
+            memebers[i] = new Memeber(member_name, member_id);
+
+            System.out.println();
+        }
+
+        for (int i = 0; i < no_of_members; i++) {
+            memebers[i].display();
+        }
+
+        for (int i = 0; i < no_of_members; i++) {
+            System.out.println("Letting member " + memebers[i].getName() + " borrow books.");
+            System.out.print("How many books does this member want to borrow? ");
+            int borrowCount = sc.nextInt();
+
+            for (int j = 0; j < borrowCount; j++) {
+                System.out.println("Enter book index (0 to " + (number_of_books - 1) + "): ");
+                int bookIndex = sc.nextInt();
+                if (bookIndex >= 0 && bookIndex < number_of_books) {
+                    memebers[i].borrowBook(book[bookIndex]);
+                } else {
+                    System.out.println("Invalid book index.");
+                }
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < no_of_members; i++) {
+            memebers[i].displayBorrowedBooks();
+        }
+    }
+}

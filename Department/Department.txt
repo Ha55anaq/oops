@@ -1,0 +1,135 @@
+package Department;
+
+public class Employee {
+    private String name;
+    private int id;
+    private int salary;
+
+    public Employee(String name, int id, int salary) {
+        this.setName(name);
+        this.setId(id);
+        this.setSalary(salary);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+}
+
+
+
+package Department;
+
+public class Department {
+    private String department_name;
+    private String manager_name;
+    private Employee [] employees;
+    private int count;
+
+    public Department(String department_name, String manager_name, int total_employees) {
+        this.setDepartment_name(department_name);
+        this.setManager_name(manager_name);
+        this.employees = new Employee[total_employees];
+    }
+
+    public String getDepartment_name() {
+        return department_name;
+    }
+
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
+    }
+
+    public String getManager_name() {
+        return manager_name;
+    }
+
+    public void setManager_name(String manager_name) {
+        this.manager_name = manager_name;
+    }
+
+    public void Employees_list() {
+        for (int i = 0; i < count; i++) {
+            System.out.println("Employee" + (i+1)  + ": " + employees[i].getName());
+        }
+    }
+
+    public void setEmployees(Employee[] employees) {
+        this.employees = employees;
+        this.count = employees.length;
+    }
+}
+
+
+
+
+package Department;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String dept_name;
+        String man_name;
+        String name;
+        int id;
+        int salary;
+        int no_of_Employees;
+
+        Department[] dp = new Department[3];
+        for (int d = 0; d < 2; d++) {
+            System.out.print("Enter Department name: ");
+            dept_name = sc.nextLine();
+            System.out.print("Enter Manager name: ");
+            man_name = sc.nextLine();
+            System.out.print("Enter number of Employees in the department: ");
+            no_of_Employees = sc.nextInt();
+
+            Employee[] emp = new Employee[no_of_Employees];
+            for (int i = 0; i < no_of_Employees; i++) {
+                sc.nextLine();
+                System.out.print("Enter Employee name: ");
+                name = sc.nextLine();
+                System.out.print("Enter Employee id: ");
+                id = sc.nextInt();
+                System.out.print("Enter Employee Salary: ");
+                salary = sc.nextInt();
+                sc.nextLine();
+
+                emp[i] = new Employee(name, id, salary);
+            }
+
+            dp[d] = new Department(dept_name, man_name, no_of_Employees);
+            dp[d].setEmployees(emp);
+        }
+        for (int d = 0; d < 2; d++) {
+            System.out.println("\nDepartment: " + dp[d].getDepartment_name());
+            System.out.println("Manager: " + dp[d].getManager_name());
+            System.out.println("Employees List:");
+            dp[d].Employees_list();
+        }
+    }
+}
